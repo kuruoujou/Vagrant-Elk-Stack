@@ -11,4 +11,8 @@ python-software-properties:
 python-apt:
   pkg.installed: []
 
+npm:
+  pkg.installed: []
 
+nodejs-legacy:
+  pkg.installed: []

@@ -9,3 +9,10 @@ insert-data:
     - unless: test -d /var/lib/elasticsearch/elasticsearch/nodes/0/indices/logstash-*
     - require:
       - cmd: wget http://rdspecialties.com/logs/access.log -O /opt/example-access.log
+
+create-dashboard:
+  cmd.run:
+    - name: elasticdump --input=/srv/salt/example-data/apache-kibana-dashboard.json --output=http://localhost:9200/.kibana
+    - unless: test -d /var/lib/elasticsearch/elasticsearch/nodes/0/indices/.kibana
+    - require:
+      - npm: elasticdump

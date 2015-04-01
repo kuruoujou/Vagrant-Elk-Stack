@@ -29,3 +29,8 @@ elasticsearch:
     - replace: True
     - require:
       - pkg: elasticsearch
+
+elasticdump:
+  npm.installed:
+    - require:
+      - pkg: npm
