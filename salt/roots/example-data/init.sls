@@ -8,7 +8,7 @@ insert-data:
     - name: cat /opt/example-access.log | nc localhost 3333
     - unless: test -d /var/lib/elasticsearch/elasticsearch/nodes/0/indices/logstash-*
     - require:
-      - cmd: wget http://rdspecialties.com/logs/access.log -O /opt/example-access.log
+      - cmd: wget http://derainsgharavi.com/liberys-access.log -O /opt/example-access.log
       - service: logstash
 
 create-dashboard:
