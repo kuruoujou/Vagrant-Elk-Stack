@@ -16,3 +16,6 @@ npm:
 
 nodejs-legacy:
   pkg.installed: []
+
+git:
+  pkg.installed: []
