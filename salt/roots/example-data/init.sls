@@ -1,6 +1,6 @@
 get-data:
   cmd.run:
-    - name: wget http://rdspecialties.com/logs/access.log -O /opt/example-access.log
+    - name: wget http://derainsgharavi.com/liberys-access.log -O /opt/example-access.log
     - creates: /opt/example-access.log
 
 insert-data:
