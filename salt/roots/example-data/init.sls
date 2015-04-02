@@ -9,6 +9,7 @@ insert-data:
     - unless: test -d /var/lib/elasticsearch/elasticsearch/nodes/0/indices/logstash-*
     - require:
       - cmd: wget http://rdspecialties.com/logs/access.log -O /opt/example-access.log
+      - service: logstash
 
 create-dashboard:
   cmd.run:
@@ -16,3 +17,4 @@ create-dashboard:
     - unless: test -d /var/lib/elasticsearch/elasticsearch/nodes/0/indices/.kibana
     - require:
       - npm: elasticdump
+      - service: elasticsearch
