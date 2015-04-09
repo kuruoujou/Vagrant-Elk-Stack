@@ -6,7 +6,7 @@ get-data:
 insert-data:
   cmd.run:
     - name: cat /opt/example-access.log | nc localhost 3333
-    - unless: test -d /var/lib/elasticsearch/elasticsearch/nodes/0/indices/logstash-*
+    - unless: test -d /var/lib/elasticsearch/elasticsearch/nodes/0/indices/logstash-$(date +%Y.%m.%d)
     - require:
       - cmd: wget http://derainsgharavi.com/liberys-access.log -O /opt/example-access.log
       - service: logstash

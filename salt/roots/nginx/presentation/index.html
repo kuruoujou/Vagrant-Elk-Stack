@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Elasticsearch and the ELK stack</title>
+
+		<meta name="description" content="Learning how an animal can help you wrangle your log files.">
+		<meta name="author" content="Spencer Julian">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="../revealjs/css/reveal.css">
+		<link rel="stylesheet" href="../revealjs/css/theme/night.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="../revealjs/lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../revealjs/css/print/pdf.css' : '../revealjs/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../revealjs/lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>The ELK Stack</h1>
+					<h3>Using an animal to wrangle your logs</h3>
+					<h6>Except not really</h6>
+					<p>
+						<small>Created by <a href="http://spencerjulian.com/">Spencer Julian</a></small>
+					</p>
+
+                                        <aside class="notes">
+                                                Hello! If you're seeing these, then you're probably checking out the demo! These notes will contain a bit more information on the current slide, specifically what I was trying to say when I got to that slide. The slide above this is what's coming next, you can ignore it unless you're presenting this as well!
+                                        </aside>
+				</section>
+
+				<section>
+					<section>
+						<h2>What is ELK?</h2>
+					</section>
+					<section>
+						<p><img src="./images/Elk1.jpg"></p>
+						<aside class="notes">
+							This is an elk.
+						</aside>
+					</section>
+					<section>
+						<p><img src="./images/stackedElks.png"></p>
+						<aside class="notes">
+							This is a stack of elks.
+						</aside>
+					</section>
+					<section>
+						<p><img src="./images/NotAnElk.jpg"></p>
+
+						<aside class="notes">
+							The ELK stack has nothing to do with elks. It is an acronym for a series of programs.
+						</aside>
+					</section>
+					<section>
+						<p>Elasticsearch</p>
+						<p class="fragment">Logstash</p>
+						<p class="fragment">Kibana</p>
+
+						<aside class="notes">
+							The ELK stack stands for Elasticsearch, Logstash, and Kibana. Together, they create a well featured logging and analysis system. Let's look at the components.
+						</aside>
+					</section>
+
+				</section>
+				<section>
+					<p><img src="./images/elasticsearch.png" style="border:none;background-color:inherit;"></p>
+					<p>You know, for search...</p>
+
+					<aside class="notes">
+						Elasticsearch is the heart of the stack. Built on Apache Lucene, designed to ingest large amounts of data, runs full-text searches. Faster and more efficient than most database built-in full-text searches, with lots of additional features. Most not relevant to ELK stack, more detail later.
+					</aside>
+				</section>
+
+				<section>
+					<section>
+						<p>A quick aside...</p>
+					
+						<aside class="notes">
+							Remember, all independant applications, and can be used independantly. ELK is just one way to use them.
+						</aside>
+					</section>
+
+					<section>
+						<p>Integrate into wiki search</p>
+						<p class="fragment">Hadoop</p>
+						<p class="fragment">Anywhere else you use search</p>
+						<p class="fragment">As a datastore</p>
+
+						<aside class="notes">
+							For example, Elasticsearch can be used for wiki search, hadoop search, and really anywhere else it could be useful. It can also be used as a datastore as it stores everything it searches internally. Doing so is outside the scope of this presentation.
+						</aside>
+
+					</section>
+					<section>
+						<p>Github</p>
+						<p class="fragment">CERN</p>
+						<p class="fragment">Netflix</p>
+						<p class="fragment">Wikimedia</p>
+						
+						<aside class="notes">
+							Github, CERN, Netflix, Wikimedia, and many others all use elasticsearch to power their search engines.
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<p><img src="./images/logstash.png" style="border:none;background-color:inherit;"></p>
+						<p>Logstash. Because what else would it be?</p>
+
+						<aside class="notes">
+							Logstash does exactly what it sounds like, and I don't mean be a log with a mustache (although that's cool). It takes logs and stashes them somewhere.
+						</aside>
+					</section>
+
+					<section>
+						<p>Inputs</p>
+						<p class="fragment">Filters</p>
+						<p class="fragment">Outputs</p>
+					
+						<aside class="notes">
+							It takes inputs, runs them through a series of filters, and sends them to a large number of outputs.
+						</aside>
+
+					</section>
+
+					<section>
+						<h3>Inputs</h3>
+						<p>collectd drupal_dblog elasticsearch eventlog exec file ganglia gelf gemfire generator graphite heroku imap invalid_input irc jmx log4j lumberjack pipe puppet_facter rabbitmq rackspace redis relp s3 snmptrap sqlite sqs stdin stomp syslog tcp twitter udp unix varnishlog websocket wmi xmpp zenoss zeromq</p>
+
+						<aside class="notes">
+							These are the inputs that come with it. An interesting one is lumberjack, which uses the logstash forwarder program on client machines to ship logs to your logstash server. We won't use this in the demo, but if you're interested you should check the logstash documentation.
+						</aside>
+					</section>
+
+					<section>
+						<h3>Filters</h3>
+						<p>advisor alter anonymize checksum cidr cipher clone collate csv date dns drop elapsed elasticsearch environment extractnumbers fingerprint gelfify geoip grep grok grokdiscovery i18n json json_encode kv metaevent metrics multiline mutate noop prune punct railsparallelrequest range ruby sleep split sumnumbers syslog_pri throttle translate unique urldecode useragent uuid wms wmts xml zeromq</p>
+
+						<aside class="notes">
+							Here are the filters. These are run on the inputs to parse each log line so it can be searched by field later. I'll explain this a bit later.
+						</aside>
+					</section>
+
+					<section>
+						<h3>Outputs</h3>
+						<p>boundary circonus cloudwatch csv datadog datadog_metrics elasticsearch elasticsearch_http elasticsearch_river email exec file ganglia gelf gemfire google_bigquery google_cloud_storage graphite graphtastic hipchat http irc jira juggernaut librato loggly lumberjack metriccatcher mongodb nagios nagios_nsca null opentsdb pagerduty pipe rabbitmq rackspace redis redmine riak riemann s3 sns solr_http sqs statsd stdout stomp syslog tcp udp websocket xmpp zabbix zeromq</p>
+
+						<aside class="notes">
+							And the possible outputs. The only one of these we're interested in today is elasticsaerch, but clearly you can have it stash things in a large number of places.
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<p><img src="./images/kibana.png" style="border:none;background-color:inherit;"></p>
+					<p>Not your poolside shelter (that's a 'cabana').</p>
+
+					<aside class="notes">
+						Kibana is the front-end dashboard to elasticsearch and logstash. In the latest version that's all it connects to, but earlier versions could connect to other systems. It's a nice front-end interface to make the other two components actually useful.
+					</aside>
+				</section>
+
+				<section>
+					<section>
+						<h2>Some flaws...</h2>
+						<p class="fragment">Simplicity (a lack thereof)</p>
+						<p class="fragment">The Backing Corporation</p>
+					
+						<aside class="notes">
+							The ELK stack is not the only option, and it has two major flaws that seriously affect it. The first is a lack of simplicity, it's time consuming to bring up and difficult to maintain. The second is elastic, the company, is moving more toward a closed-source paid-for structure, and has removed some features from the ELK programs and implemented them in their non-free programs.
+						</aside>
+					</section>
+
+					<section>
+						<h2>Some competitors.</h2>
+						<p class="fragment">Loggly</p>
+						<p class="fragment">Splunk&gt;</p>
+
+						<aside class="notes">
+							There are some major competitors to the ELK stack. Loggly is a simple all-in one agentless solution, but it's cloud-based and not free. Splunk&gt; is incredibly expensive, but is a local install. Both are more simple to maintain and much more powerful than the ELK stack, including things like alerts and reports built into the program. I would personally recommend using one of these if you can afford it, and don't mind being closed-source.
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Configuration</h2>
+				
+						<aside class="notes">
+							Ok, let's start looking at configuration. I assume you've already done installation.
+						</aside>
+					</section>
+
+					<section>
+						<h2>Elasticsearch</h2>
+						<pre><code data-trim contenteditable>
+network.host: localhost
+						</code></pre>
+						<p>/etc/elasticsearch/elasticsearch.yml</p>
+
+						<aside class="notes">
+							Elasticsearch basic configuration is easy. It's done in that yaml file. The only requirement is setting the network.host - localhost in this case.
+						</aside>
+					</section>
+	
+					<section>
+						<h2>Kibana</h2>
+						<p>Nothing Required (for us)</p>
+						
+						<aside class="notes">
+							Kibana is useful - in this sort of a setup, there is nothing we need to do. About the only actual configuration is pointing it at elasticsearch - it points to localhost by default.
+						</aside>
+					</section>
+
+					<section>
+						<h2>Logstash</h2>
+						<pre><code data-trim contenteditable>
+input event | filter event | output event
+						</code></pre>
+						<p>Event Life</p>
+
+						<aside class="notes">
+							Before we really go into Logstash's configuration, it's more useful to understand how logstash works - in unix terms, an event works like this. The input it piped into the filters is piped into the outputs.
+						</aside>
+					</section>
+
+					<section>
+						<h2>Input</h2>
+						<pre><code data-trim contenteditable>
+input {
+  tcp {
+    port => 3333
+    type => apache_access_logs
+  }
+}
+						</code></pre>
+						<p>/etc/logstash/conf.d/20-tcp-input.conf</p>
+						<aside class="notes">
+							Notice that it uses alphanumeric notation on the filename. It runs through all of the config files in order, as you might expect. We use this input to pipe events into a TCP port verbatim. We do this instead of the file input for example data, because the file input works like the tail command, while this we can simply cat everything into. In a normal use case, we would probably use lumberjack or rsyslogd. Notice the type - this is what tags the log type for logstash, and eventually for search.
+						</aside>
+
+					</section>
+
+					<section>
+						<h2>Output</h2>
+						<pre><code data-trim contenteditable>
+output {
+  elasticsearch { 
+    host => localhost
+  }
+  stdout { 
+    codec => rubydebug 
+  }
+}
+						</code></pre>
+						<p>/etc/logstash/conf.d/90-elasticsearch-output.conf</p>
+						<aside class="notes">
+							Here you can see the elasticsearch output. Fairly straightforward - logstash stashes the log line in the local elasticsearch instance. The stdout stanza is used for debugging - the codec transforms the line to a different format, in this case the rubydebug format, for easy reading.
+						</aside>
+
+					</section>
+					
+					<section>
+						<h2>Filter</h2>
+						<pre><code data-trim contenteditable>
+filter {
+  if [type] == "apache_access_logs" {
+    grok {
+      match => { "message" => "%{COMBINEDAPACHELOG}" }
+    }
+
+    date {
+      match => ['timestamp', 'dd/MMM/yyyy:HH:mm:ss Z']
+    }
+
+    useragent {
+      source => "agent"
+    }
+
+    geoip {
+      source => "clientip"
+      target => "geoip"
+    }
+  }
+}
+						</code></pre>
+						<p>/etc/logstash/conf.d/40-apache-filter.conf</p>
+						<p class="fragment">%{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] "(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})" %{NUMBER:response} (?:%{NUMBER:bytes}|-) %{QS:referrer} %{QS:agent}</p>
+						<aside class="notes">
+							The meat of the pipe - the filter. This filter only works on the apache_access_logs type, which we set in the input. There are 4 filters here. The Grok matches patterns in the log line. This pattern is included with logstash and looks like this. You can see we tag each section of the log line. The date filter uses a tagged field (in this case timestamp) to generate the date of the log. The default date is the time logstash reads it, which isn't useful for this example data. The useragent line takes a tagged field and parses out bits of the useragent string for OS, Browser, etc. This is useful for web logs - we'll see it's usefulness later. Finally, geoip takes an IP address and discovers the location of the IP address, so we can plot locations on a map.
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Usage</h2>
+					
+						<aside class="notes">
+							Ok, let's take a look at using the ELK stack by looking at the interface and building a dashboard.
+						</aside>
+					</section>
+
+					<section>
+						<p><img src="./images/indexpattern.png"></p>
+					
+						<aside class="notes">
+							Before we can get started, we need to configure an index pattern. We select the only option, "timestamp", and then click "Create". Then we can go into the discovery page.
+						</aside>
+					</section>
+			
+					<section>
+						<p><img src="./images/kibana-discover.png"></p>
+					
+						<aside class="notes">
+							This is the discover page, the basics of kibana. You can search elasticsearch directly at the top of the page, or configure your current time period to search on the top right. You can save and load searches by the search box, and see a nice histogram of hits over time above the raw search results. You can...
+						</aside>
+					</section>
+
+					<section>
+						<p><img src="./images/expanded-results.png"></p>
+						<aside class="notes">
+							...expand any of the results to see more detail about each individual field, or you can...
+						</aside>
+					</section>
+
+					<section>
+						<p><img src="./images/quick-count.png"></p>
+						<aside class="notes">
+							...click any of the fields on the sidebar to get a quick histogram of results for that field.
+						</aside>
+					</section>
+
+					<section>
+						<p><img src="./images/visualize.png"></p>
+						<aside class="notes">
+							Before you can make a dsahboard, you have to make visualizations to go on that dashboard. Here is an example. We have searched for the apache_access_log type and made a pie chart with that search. We used a split-splice pie chart instead of a split-chart version, aggregated on terms over the os field (note the raw, it's better to use a raw field than a computed field for visualizations). Once we clicked apply, we got this nice pie chart, so we can...
+						</aside>
+					</section>
+
+					<section>
+						<p><img src="./images/save-visualize.png"></p>
+						<aside class="notes">
+							...save this pie chart as "operating systems". Now we can make a dashboard with it.
+						</aside>
+					</section>
+
+					<section>
+						<p><img src="./images/dashboard-blank.png"></p>
+						<aside class="notes">
+							Here we have the blank dashboard page. We'll follow the instructions and click the "+" to find our visualization.
+						</aside>
+					</section>
+
+					<section>
+						<p><img src="./images/search-dashboard.png"></p>
+						<aside class="notes">
+							Here is what we get. Searching for "operating" shows the visualization we made. Once we click it...
+						</aside>
+					</section>
+
+					<section>
+						<p><img src="./images/add-to-dashboard.png"></p>
+						<aside class="notes">
+							It goes right on the dashboard. We can resize it and move it around as we desire. That was pretty easy! We can build a bunch of different sorts of visualizations, and put them all on a dashboard to get a dashboard like...
+						</aside>
+					</section>
+
+					<section>
+						<p><img src="./images/complete-dashboard.png"></p>
+						<aside class="notes">
+							...this one! This is the example dashboard included in the Vagrant VM, so you can play with it as you want if you grab the Vagrant image.
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<h4>Animals are not log-wranglers.</h4>
+					<p>Elasticsearch: You know, for Search...</p>
+					<p>Logstash: It's a log. With a mustache.</p>
+					<p>Kibana: Still not a thing by a pool.</p>
+					<p><small>Vagrant VM on github: <a href="http://git.io/veFGC">http://git.io/veFGC</a> (kuruoujou/Vagrant-Elk-Stack)</small></p>
+					<p><img src="./images/github-qr-code.png"></p>
+
+					<aside class="notes">
+						Thanks for reading. The ELK Stack, while not necessarily the best on the market, is definitely the cheapest option to get a good wrangle on your data. It doesn't matter what kind of data - customer data, log files, weather, tweets - it all works. Personally, I've used it for keeping track of my Nest data and comparing it to the outdoor temperature. Elastic's own documentation uses travel data from Transport for London - it's useful anywhere.
+
+If you have questions, feel free to drop me a line at my website (http://spencerjulian.com) or on twitter (@kuroshi), by email (helloThere@spencerjulian.com), or however else you can get a hold of me.
+					</aside>
+				</section>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="../revealjs/lib/js/head.min.js"></script>
+		<script src="../revealjs/js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: false,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: '../revealjs/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../revealjs/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../revealjs/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../revealjs/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../revealjs/plugin/zoom-js/zoom.js', async: true },
+					{ src: '../revealjs/plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

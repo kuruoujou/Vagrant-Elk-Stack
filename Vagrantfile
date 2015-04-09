@@ -22,4 +22,5 @@ Vagrant.configure("2") do |config|
 	
 	## Forward the kibana port
 	config.vm.network "forwarded_port", guest: 5601, host: 5601
+    config.vm.network "forwarded_port", guest: 80, host: 8000
   end

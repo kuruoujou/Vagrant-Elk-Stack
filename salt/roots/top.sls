@@ -8,3 +8,5 @@ base:
     - logstash
     - kibana
     - example-data
+    - nginx
+    - revealjs

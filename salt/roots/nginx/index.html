@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<head>
+  <title>ELK Stack Demo Environment</title>
+  <style type="text/css" media="all">
+
+html{
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+body{
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: #eee;     
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+h2{
+  padding: .25em 0 0 0;
+  margin: 10px auto;
+  text-align: center;
+  background-color: #fff;
+  width: 90%;
+  height: 1.5em;
+  font-size: 3em;
+  font-weight: normal;
+  color: #00C711;
+  display: block;
+  -moz-box-shadow: rgba(0,0,0,0.15) 1px 1px 1px;
+  -webkit-box-shadow: rgba(0,0,0,0.15) 1px 1px 1px;
+  -o-box-shadow: rgba(0,0,0,0.15) 1px 1px 1px;
+  -ms-box-shadow: rgba(0,0,0,0.15) 1px 1px 1px;
+  box-shadow: rgba(0,0,0,0.15) 1px 1px 1px;
+}
+p{
+  width: 70%;
+  margin: 15px auto;
+  font-size: 1.3em;
+  line-height: 1.5em;
+}
+p.signature{
+  color: #aaa;
+}
+
+  </style>
+</head>
+<body>
+  <h2>Welcome to the ELK Stack demo.</h2>
+  <p>To jump straight in, go to <a href="http://127.0.0.1:5601">http://127.0.0.1:5601</a> and configure the index pattern. Example data, visualizations, and an example dashboard should already be set up for you.</p>
+  <p>For a bit of background, check out <a href="http://127.0.0.1:8000/presentation/#/">the presentation</a> to get an idea of how to use this. As this is part of a spoken presentation, it may not be as useful without the speaker notes. Press "s" when you get to that page to bring them up, which may help explain some of the slides a bit better.</p>
+  <p>Finally, if you want to play around with it, simply run "vagrant ssh" to SSH into the box in question. Modify config files, mess with settings, do what you want. Run "sudo salt-call state.highstate" in the VM, or "vagrant provision" outside of it, to bring things back to the installation state.</p>
+  <p>The example data provided is only good up to the point that 'vagrant up' was run, so after a few days this VM should probably be destroyed ('vagrant destroy') and re-upped ('vagrant up'). Have fun!</p>
+  <p class="signature"> - Spencer Julian</p>
+</body>
+</html>
