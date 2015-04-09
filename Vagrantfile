@@ -23,4 +23,8 @@ Vagrant.configure("2") do |config|
 	## Forward the kibana port
 	config.vm.network "forwarded_port", guest: 5601, host: 5601
     config.vm.network "forwarded_port", guest: 80, host: 8000
+
+    ## Some instruction post-vagrant up
+    config.vm.pust_up_message "Congratulations, your ELK Stack VM is ready. To SSH into the node, type vagarant ssh. To learn more about ELK, visit http://127.0.0.1:8000 in your browser, or to jump right into Kibana, visit http://127.0.0.1:5601 in your browser. A modern browser is required."
+
   end
