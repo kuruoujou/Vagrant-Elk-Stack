@@ -21,6 +21,7 @@ nginx:
     - source:
       - salt://nginx/index.html
     - replace: True
+    - makedirs: True
     - require:
       - pkg: nginx
 
